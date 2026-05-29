@@ -1,56 +1,61 @@
 {
-  "scanSettings": {
-    "configMode": "AUTO",
-    "configExternalURL": "",
-    "projectToken": "",
-    "baseBranches": []
-  },
-  "scanSettingsSAST": {
-    "enableScan": true,
-    "scanPullRequests": true,
-    "incrementalScan": true,
-    "baseBranches": [],
-    "snippetSize": 10
-  },
-  "checkRunSettings": {
-    "vulnerableCheckRunConclusionLevel": "failure",
-    "displayMode": "diff",
-    "useMendCheckNames": true
-  },
-  "checkRunSettingsSAST": {
-    "checkRunConclusionLevel": "failure",
-    "severityThreshold": "high"
-  },
-  "issueSettings": {
-    "minSeverityLevel": "LOW",
-    "issueType": "DEPENDENCY"
-  },
-  "issueSettingsSAST": {
-    "minSeverityLevel": "high",
-    "issueType": "repo"
-  },
-  "remediateSettings": {
-    "workflowRules": {
-      "enabled": true
-    }
-  },
-   "imageSettings":{
-       "imageTracing":{
-           "enableImageTracingPR": false,
-           "addRepositoryCoordinate": false,
-           "addDockerfilePath": false,
-           "addMendIdentifier": false
-       }
-   }
+  "scanSettings": {
+    "configMode": "AUTO",
+    "configExternalURL": "",
+    "baseBranches": [],
+    "enableLicenseViolations": true,
+    "enableReachability": true,
+    "enableIaC": true,
+    "exploitability": true,
+    "releaseBranches": ["v.*"]
+  },
+  "scanSettingsSAST": {
+    "enableScan": true,
+    "enableRemediation": true,
+    "scanPullRequests": true,
+    "incrementalScan": true,
+    "baseBranches": [],
+    "snippetSize": 10
+  },
+  "imageSettings": {
+    "imageTracing": {
+        "enableImageTracingPR": true,
+        "addDockerfilePath": true,
+        "addRepositoryCoordinates": true
+    }
+  },
+  "checkRunSettings": {
+    "vulnerableCheckRunConclusionLevel": "failure",
+    "displayMode": "diff",
+    "useMendCheckNames": true,
+    "strictMode": "failure"
+  },
+  "checkRunSettingsSAST": {
+    "checkRunConclusionLevel": "failure",
+    "severityThreshold": "high"
+  },
+  "releaseBranchSettings": {
+    "checkRunSettings.failOnLicenseViolation": true,
+    "checkRunSettings.strictMode": "failure",
+    "checkRunSettings.failOnVulnerabilityMinCvss": 9.0
+  },
+  "issueSettings": {
+    "minSeverityLevel": "LOW",
+    "issueType": "DEPENDENCY"
+  },
+  "issueSettingsSAST": {
+    "issueType": "repo",
+    "minSeverityLevel": "high"
+  },
+  "remediateSettings": {
+    "workflowRules": {
+      "enabled": false
+    },
+    "enableRenovate": true,
+    "extends": [
+       "config:best-practices",
+       "mergeConfidence:all-badges",
+       "github>mend-toolkit/mend-examples//Repo-Integration/Renovate/smart-merge"
+      ]
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
