@@ -1,0 +1,28 @@
+name: Security Scan
+
+on:
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  container-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t myapp:${{ github.sha }} .
+
+      - name: Mend Container Scan
+        uses: whitesource-actions/container-scan@v1
+        with:
+          containerName: myapp:${{ github.sha }}
+          wsApiKey: ${{ secrets.MEND_API_KEY }}
+          wsUserKey: ${{ secrets.MEND_USER_KEY }}
+          productName: MyProduct
+          projectName: ${{ github.repository }}
+          failOnHigh: true
+          failOnMedium: false
+          failOnLow: false
+          failOnCritical: true
